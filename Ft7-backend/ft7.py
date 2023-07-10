@@ -20,13 +20,6 @@ CORS(app, headers=['Content-Type']) # [2]
 # Allow cookies to be included in cross-origin requests
 CORS(app, supports_credentials=True) 
 
-
-
-cred = credentials.Certificate("sdp-19-firebase-adminsdk-e51x6-10b557a74f.json")
-firebase_admin.initialize_app(cred)
-db = firestore.client()
-
-
 questions = []
 
 @app.route('/#/add-questions', methods=['POST'])
