@@ -25,7 +25,7 @@ const AddQuestionForm = () => {
     };
 
     // Make the POST request to the backend server
-    const containerurl="https://localhost:5000/#/add-question"
+    const containerurl="http://localhost:5000/#/addquestion"
     fetch('/#/add-question', {
       method: 'POST',
       headers: {
