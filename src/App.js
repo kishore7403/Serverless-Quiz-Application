@@ -9,6 +9,7 @@ import TriviaContentManagementPage from "./pages/admin";
 import AddQuestionForm from "./pages/addQuestion";
 import EditQuestionPage from "./pages/editQuestion";
 import EditQuestionDetailsPage from "./pages/editQuestionDetails";
+import DeleteQuestionPage from "./pages/deleteQuestion";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route element={<AddQuestionForm />} path="/add-question" />
         <Route element={<EditQuestionPage />} path="/edit-question" />
         <Route element={<EditQuestionDetailsPage />} path="/edit-question-details" />
+        <Route element={<DeleteQuestionPage />} path="/delete-question" />
       </Routes>
     </AuthContextProvider>
   </div>;
