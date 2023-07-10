@@ -6,6 +6,7 @@ import Logout from "./pages/logout";
 import {AuthContextProvider} from "./context/AuthContext";
 import Dashboard from "./pages/dashboard";
 import TriviaContentManagementPage from "./pages/admin";
+import AddQuestionForm from "./pages/addQuestion";
 
 function App() {
   return <div>
@@ -16,6 +17,7 @@ function App() {
         <Route element={<Logout />} path="/logout" />
         <Route element={<Dashboard />} path="/dashboard" />
         <Route element={<TriviaContentManagementPage />} path="/admin" />
+        <Route element={<AddQuestionForm />} path="/add-question" />
       </Routes>
     </AuthContextProvider>
   </div>;

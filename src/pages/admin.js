@@ -1,13 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
-import './admin.css'; 
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const TriviaContentManagementPage = () => {
+  const navigate = useNavigate();
+
   const handleAdd = () => {
-    // Handle the logic for adding a new trivia question
+    navigate('/add-question');
   };
 
   const handleEdit = () => {
@@ -31,7 +33,6 @@ const TriviaContentManagementPage = () => {
         <Button variant="contained" startIcon={<DeleteIcon />} onClick={handleDelete}>
           Delete Question
         </Button>
-        
       </div>
     </div>
   );
