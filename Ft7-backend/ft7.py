@@ -68,8 +68,8 @@ def edit_question():
 @app.route('/deletequestion', methods=['POST'])
 def delete_document():
     try:
-        document_id = request.json['document_id']
-        db.collection('questions').document(document_id).delete()
+        document_id = request.json['questionNumber']
+        db.collection('questions').document('q'+str(document_id)).delete()
         return jsonify({'success': True}), 200
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
