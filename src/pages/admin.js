@@ -14,7 +14,7 @@ const TriviaContentManagementPage = () => {
   };
 
   const handleEdit = () => {
-    // Handle the logic for editing a trivia question
+    navigate('/edit-question');
   };
 
   const handleDelete = () => {
