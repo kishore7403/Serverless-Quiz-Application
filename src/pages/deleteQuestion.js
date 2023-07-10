@@ -6,8 +6,32 @@ const DeleteQuestionPage = () => {
   const [question, setQuestion] = useState('');
 
   const handleDeleteQuestion = () => {
-    // ...handleDeleteQuestion logic...
+    const requestData = {
+      questionNumber: question,
+    };
+  
+    fetch('http://localhost:5000/deletequestion', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestData),
+    })
+      .then((response) => {
+        if (response.ok) {
+          
+          alert('Question deleted successfully');
+        } else {
+          
+          alert('Failed to delete question');
+        }
+      })
+      .catch((error) => {
+        
+        alert('Failed to delete question', error);
+      });
   };
+  
 
   return (
     <div className={styles.container}>
