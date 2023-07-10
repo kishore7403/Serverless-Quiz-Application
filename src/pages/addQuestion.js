@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
@@ -37,7 +39,9 @@ const AddQuestionForm = () => {
     })
       .then((response) => {
         if (response.ok) {
+            console.log("status: Success")
           // Redirect to the previous page after successfully adding the question
+          alert('Question added successfully');
           navigate(-1);
         } else {
           // Handle error cases here
