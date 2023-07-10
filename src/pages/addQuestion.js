@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import TextField from '@mui/material/TextField';
 
+
 const AddQuestionForm = () => {
   const navigate = useNavigate();
   const [questionNumber, setQuestionNumber] = useState('');
@@ -25,8 +26,8 @@ const AddQuestionForm = () => {
     };
 
     // Make the POST request to the backend server
-    const containerurl="http://localhost:5000/#/addquestion"
-    fetch('/#/add-question', {
+    const containerurl="http://localhost:5000/addquestion"
+    fetch(containerurl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

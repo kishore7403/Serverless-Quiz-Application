@@ -35,7 +35,7 @@ def add_question():
     category = question_data.get('category')
     difficulty_level = question_data.get('difficultyLevel')
 
-    doc_ref = db.collection('questions').document(str(question_number))
+    doc_ref = db.collection('questions').document('q'+str(question_number))
     doc_ref.set({
         'questionNumber': question_number,
         'questionText': question_text,
