@@ -27,7 +27,7 @@ db = firestore.client()
 
 questions = []
 
-@app.route('/api/questions', methods=['POST'])
+@app.route('/#/add-questions', methods=['POST'])
 def add_question():
     question_data = request.json
 
@@ -39,21 +39,23 @@ def add_question():
     category = question_data.get('category')
     difficulty_level = question_data.get('difficultyLevel')
 
-    # Create a new question object
-    question = {
+    doc_ref = db.collection('questions').document(str(question_number))
+    doc_ref.set({
         'questionNumber': question_number,
         'questionText': question_text,
         'options': options,
         'correctAnswerIndex': correct_answer_index,
         'category': category,
         'difficultyLevel': difficulty_level
-    }
+    })
 
-    # Add the question to the questions list
-    questions.append(question)
+
+    
+    # # Add the question to the questions list
+    # questions.append(question)
 
     # Return a success response
     return jsonify({'message': 'Question added successfully'})
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=5000)
