@@ -3,6 +3,7 @@ from flask_cors import CORS
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
+import json
 
 
 cred = credentials.Certificate("sdp-19-firebase-adminsdk-e51x6-10b557a74f.json")
@@ -22,7 +23,7 @@ CORS(app, supports_credentials=True)
 
 questions = []
 
-@app.route('/#/add-questions', methods=['POST'])
+@app.route('/addquestion', methods=['POST'])
 def add_question():
     question_data = request.json
 
