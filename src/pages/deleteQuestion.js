@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Button, TextField } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import styles from './deleteQuestion.module.css';
 
 const DeleteQuestionPage = () => {
+    const navigate = useNavigate();
   const [question, setQuestion] = useState('');
 
   const handleDeleteQuestion = () => {
@@ -19,8 +21,8 @@ const DeleteQuestionPage = () => {
     })
       .then((response) => {
         if (response.ok) {
-          
           alert('Question deleted successfully');
+          navigate(-1);
         } else {
           
           alert('Failed to delete question');
