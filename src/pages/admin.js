@@ -18,7 +18,7 @@ const TriviaContentManagementPage = () => {
   };
 
   const handleDelete = () => {
-    // Handle the logic for deleting a trivia question
+    navigate('/delete-question');
   };
 
   return (

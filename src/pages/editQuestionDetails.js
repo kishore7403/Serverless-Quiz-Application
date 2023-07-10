@@ -14,8 +14,27 @@ const EditQuestionDetailsPage = () => {
   }, []);
 
   const handleSaveChanges = () => {
-    sessionStorage.removeItem('questionData');
-    navigate(-1);
+    // Make the backend request here
+    fetch('http://localhost:5000/addquestion', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(questionData)
+    })
+      .then((response) => {
+        if (response.ok) {
+          // Navigate two pages back upon successful completion
+          navigate(-2);
+        } else {
+          // Handle error cases here
+          console.error('Failed to save question details');
+        }
+      })
+      .catch((error) => {
+        // Handle error cases here
+        console.error('Failed to save question details');
+      });
   };
 
   if (!questionData) {
@@ -39,6 +58,7 @@ const EditQuestionDetailsPage = () => {
           <TextField
             type="text"
             value={questionData.questionText}
+            onChange={(e) => setQuestionData({ ...questionData, questionText: e.target.value })}
           />
         </div>
         <div className="form-row">
@@ -46,6 +66,7 @@ const EditQuestionDetailsPage = () => {
           <TextField
             type="text"
             value={questionData.options[0]}
+            onChange={(e) => setQuestionData({ ...questionData, options: [e.target.value, questionData.options[1], questionData.options[2], questionData.options[3]] })}
           />
         </div>
         <div className="form-row">
@@ -53,6 +74,7 @@ const EditQuestionDetailsPage = () => {
           <TextField
             type="text"
             value={questionData.options[1]}
+            onChange={(e) => setQuestionData({ ...questionData, options: [questionData.options[0], e.target.value, questionData.options[2], questionData.options[3]] })}
           />
         </div>
         <div className="form-row">
@@ -60,6 +82,7 @@ const EditQuestionDetailsPage = () => {
           <TextField
             type="text"
             value={questionData.options[2]}
+            onChange={(e) => setQuestionData({ ...questionData, options: [questionData.options[0], questionData.options[1], e.target.value, questionData.options[3]] })}
           />
         </div>
         <div className="form-row">
@@ -67,6 +90,7 @@ const EditQuestionDetailsPage = () => {
           <TextField
             type="text"
             value={questionData.options[3]}
+            onChange={(e) => setQuestionData({ ...questionData, options: [questionData.options[0], questionData.options[1], questionData.options[2], e.target.value] })}
           />
         </div>
         <div className="form-row">
@@ -74,6 +98,7 @@ const EditQuestionDetailsPage = () => {
           <TextField
             type="number"
             value={questionData.correctAnswerIndex}
+            onChange={(e) => setQuestionData({ ...questionData, correctAnswerIndex: parseInt(e.target.value) })}
           />
         </div>
         <div className="form-row">
@@ -81,6 +106,7 @@ const EditQuestionDetailsPage = () => {
           <TextField
             type="text"
             value={questionData.category}
+            onChange={(e) => setQuestionData({ ...questionData, category: e.target.value })}
           />
         </div>
         <div className="form-row">
@@ -88,6 +114,7 @@ const EditQuestionDetailsPage = () => {
           <TextField
             type="text"
             value={questionData.difficultyLevel}
+            onChange={(e) => setQuestionData({ ...questionData, difficultyLevel: e.target.value })}
           />
         </div>
         <div className="form-row">
