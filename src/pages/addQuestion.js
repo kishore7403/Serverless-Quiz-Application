@@ -14,10 +14,37 @@ const AddQuestionForm = () => {
   const [difficultyLevel, setDifficultyLevel] = useState('');
 
   const handleAddQuestion = () => {
-    // Handle logic to add the question to the database
+    // Create an object with the question data
+    const questionData = {
+      questionNumber,
+      questionText,
+      options,
+      correctAnswerIndex,
+      category,
+      difficultyLevel,
+    };
 
-    // Redirect to the previous page after adding the question
-    navigate(-1);
+    // Make the POST request to the backend server
+    fetch('/#/add-question', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(questionData),
+    })
+      .then((response) => {
+        if (response.ok) {
+          // Redirect to the previous page after successfully adding the question
+          navigate(-1);
+        } else {
+          // Handle error cases here
+          // ...
+        }
+      })
+      .catch((error) => {
+        // Handle error cases here
+        // ...
+      });
   };
 
   const handleOptionChange = (index, value) => {
