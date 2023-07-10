@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import styles from './editQuestion.module.css';
 
 const EditQuestionPage = () => {
   const [questionNumber, setQuestionNumber] = useState('');
-  const [questionData, setQuestionData] = useState(null);
-  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,19 +24,19 @@ const EditQuestionPage = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        setQuestionData(data);
-        setError(null);
+        sessionStorage.setItem('questionData', JSON.stringify(data));
+        navigate('/edit-question-details');
       })
       .catch((error) => {
-        setError('Failed to fetch question data. Please try again.');
-        setQuestionData(null);
+        alert("edit failed")
+        navigate(-1);
       });
   };
 
   return (
     <div className={styles.container}>
       <h2>Edit Question</h2>
-      <form className={styles.form} onSubmit={handleSubmit}> 
+      <form className={styles.form} onSubmit={handleSubmit}>
         <TextField
           id="questionNumber"
           label="Question Number"
@@ -44,16 +44,10 @@ const EditQuestionPage = () => {
           onChange={(e) => setQuestionNumber(e.target.value)}
           required
         />
-        <Button type="submit" variant="contained">Submit</Button>
+        <Button type="submit" variant="contained">
+          Submit
+        </Button>
       </form>
-      {questionData && (
-        <div className={styles['question-details']}> 
-          <h3>Question Details:</h3>
-          <p>Question Number: {questionData.questionNumber}</p>
-          <p>Question Text: {questionData.questionText}</p>
-        </div>
-      )}
-      {error && <p className={styles.error}>{error}</p>}
     </div>
   );
 };

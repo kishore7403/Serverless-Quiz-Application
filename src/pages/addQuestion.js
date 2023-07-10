@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
@@ -44,8 +43,7 @@ const AddQuestionForm = () => {
           alert('Question added successfully');
           navigate(-1);
         } else {
-          // Handle error cases here
-          // ...
+    
         }
       })
       .catch((error) => {
