@@ -1,7 +1,9 @@
+from flask import Flask, request
+from flask_cors import CORS
 import firebase_admin
 from firebase_admin import credentials
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+from firebase_admin import firestore
+
 
 cred = credentials.Certificate("sdp-19-firebase-adminsdk-e51x6-10b557a74f.json")
 firebase_admin.initialize_app(cred)
