@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import './admin.css';
+import styles from '../styles/admin.module.css';
 
 const TriviaContentManagementPage = () => {
   const navigate = useNavigate();
@@ -22,9 +22,9 @@ const TriviaContentManagementPage = () => {
   };
 
   return (
-    <div className="container">
+    <div className={styles.container}>
       <h2>Trivia Content Management</h2>
-      <div className="button-container">
+      <div className={styles.buttonContainer}>
         <Button variant="contained" startIcon={<AddIcon />} onClick={handleAdd}>
           Add Question
         </Button>

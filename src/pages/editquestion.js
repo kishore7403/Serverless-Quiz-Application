@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import styles from './editQuestion.module.css';
+import styles from '../styles/editQuestion.module.css';
 
 const EditQuestionPage = () => {
   const [questionNumber, setQuestionNumber] = useState('');

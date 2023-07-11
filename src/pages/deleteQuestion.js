@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import styles from './deleteQuestion.module.css';
+import styles from '../styles/deleteQuestion.module.css';
 
 const DeleteQuestionPage = () => {
     const navigate = useNavigate();

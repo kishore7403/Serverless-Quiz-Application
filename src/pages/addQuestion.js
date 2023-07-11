@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
-import Button from '@mui/material/Button';
+import { Button, TextField } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import TextField from '@mui/material/TextField';
-import './addQuestion.css'
-
+import styles from '../styles/addQuestion.module.css';
 
 const AddQuestionForm = () => {
   const navigate = useNavigate();
@@ -17,7 +14,6 @@ const AddQuestionForm = () => {
   const [difficultyLevel, setDifficultyLevel] = useState('');
 
   const handleAddQuestion = () => {
-    // Create an object with the question data
     const questionData = {
       questionNumber,
       questionText,
@@ -28,8 +24,7 @@ const AddQuestionForm = () => {
     };
 
     // Make the POST request to the backend server
-    const containerurl="http://localhost:5000/addquestion"
-    fetch(containerurl, {
+    fetch('http://localhost:5000/addquestion', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -38,17 +33,14 @@ const AddQuestionForm = () => {
     })
       .then((response) => {
         if (response.ok) {
-            console.log("status: Success")
-          // Redirect to the previous page after successfully adding the question
-          alert('Question added successfully');
+          console.log('Question added successfully');
           navigate(-1);
         } else {
-    
+          console.error('Failed to add question');
         }
       })
       .catch((error) => {
-        // Handle error cases here
-        // ...
+        console.error('Failed to add question', error);
       });
   };
 
@@ -61,10 +53,10 @@ const AddQuestionForm = () => {
   };
 
   return (
-    <div className="container">
+    <div className={styles.container}>
       <h2>Add Question</h2>
-      <div className="form-container">
-        <div className="form-row">
+      <div className={styles.formContainer}>
+        <div className={styles.formRow}>
           <h4>Question Number</h4>
           <TextField
             value={questionNumber}
@@ -73,7 +65,7 @@ const AddQuestionForm = () => {
             margin="normal"
           />
         </div>
-        <div className="form-row">
+        <div className={styles.formRow}>
           <h4>Question Text</h4>
           <TextField
             value={questionText}
@@ -82,7 +74,7 @@ const AddQuestionForm = () => {
             margin="normal"
           />
         </div>
-        <div className="form-row">
+        <div className={styles.formRow}>
           <h4>Option 1</h4>
           <TextField
             value={options[0]}
@@ -91,7 +83,7 @@ const AddQuestionForm = () => {
             margin="normal"
           />
         </div>
-        <div className="form-row">
+        <div className={styles.formRow}>
           <h4>Option 2</h4>
           <TextField
             value={options[1]}
@@ -100,7 +92,7 @@ const AddQuestionForm = () => {
             margin="normal"
           />
         </div>
-        <div className="form-row">
+        <div className={styles.formRow}>
           <h4>Option 3</h4>
           <TextField
             value={options[2]}
@@ -109,7 +101,7 @@ const AddQuestionForm = () => {
             margin="normal"
           />
         </div>
-        <div className="form-row">
+        <div className={styles.formRow}>
           <h4>Option 4</h4>
           <TextField
             value={options[3]}
@@ -118,7 +110,7 @@ const AddQuestionForm = () => {
             margin="normal"
           />
         </div>
-        <div className="form-row">
+        <div className={styles.formRow}>
           <h4>Correct Answer Index</h4>
           <TextField
             type="number"
@@ -128,7 +120,7 @@ const AddQuestionForm = () => {
             margin="normal"
           />
         </div>
-        <div className="form-row">
+        <div className={styles.formRow}>
           <h4>Category</h4>
           <TextField
             value={category}
@@ -137,7 +129,7 @@ const AddQuestionForm = () => {
             margin="normal"
           />
         </div>
-        <div className="form-row">
+        <div className={styles.formRow}>
           <h4>Difficulty Level</h4>
           <TextField
             value={difficultyLevel}
@@ -146,7 +138,7 @@ const AddQuestionForm = () => {
             margin="normal"
           />
         </div>
-        <div className="form-row">
+        <div className={styles.formRow}>
           <Button variant="contained" onClick={handleAddQuestion} startIcon={<AddIcon />}>
             Add Question
           </Button>
