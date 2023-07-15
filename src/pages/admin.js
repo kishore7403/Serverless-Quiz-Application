@@ -21,6 +21,14 @@ const TriviaContentManagementPage = () => {
     navigate('/delete-question');
   };
 
+  const handleCreateGame = () => {
+    navigate('/create-game');
+  };
+
+  const handleManageGames = () => {
+    navigate('/manage-games');
+  };
+
   return (
     <div className={styles.container}>
       <h2>Trivia Content Management</h2>
@@ -33,6 +41,14 @@ const TriviaContentManagementPage = () => {
         </Button>
         <Button variant="contained" startIcon={<DeleteIcon />} onClick={handleDelete}>
           Delete Question
+        </Button>
+      </div>
+      <div className={styles.buttonContainer}>
+        <Button variant="contained" startIcon={<AddIcon />} onClick={handleCreateGame}>
+          Create Game
+        </Button>
+        <Button variant="contained" startIcon={<EditIcon />} onClick={handleManageGames}>
+          Manage Game
         </Button>
       </div>
     </div>

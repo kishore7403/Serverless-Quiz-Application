@@ -10,6 +10,7 @@ import AddQuestionForm from "./pages/addQuestion";
 import EditQuestionPage from "./pages/editquestion";
 import EditQuestionDetailsPage from "./pages/editQuestionDetails";
 import DeleteQuestionPage from "./pages/deleteQuestion";
+import CreateGamePage from "./pages/createGame";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route element={<EditQuestionPage />} path="/edit-question" />
         <Route element={<EditQuestionDetailsPage />} path="/edit-question-details" />
         <Route element={<DeleteQuestionPage />} path="/delete-question" />
+        <Route element={<CreateGamePage />} path="/create-game" />
       </Routes>
     </AuthContextProvider>
   </div>;
