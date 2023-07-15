@@ -12,7 +12,7 @@ const DeleteQuestionPage = () => {
       questionNumber: question,
     };
   
-    fetch('http://localhost:5000/deletequestion', {
+    fetch('https://us-central1-sdp-19.cloudfunctions.net/delete_question', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
