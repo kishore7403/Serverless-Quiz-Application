@@ -15,6 +15,7 @@ const EditQuestionPage = () => {
       questionNumber: questionNumber
     };
 
+    // Place url of cloud funccctions
     fetch('https://us-central1-sdp-19.cloudfunctions.net/edit_question', {
       method: 'POST',
       headers: {

@@ -24,6 +24,7 @@ const AddQuestionForm = () => {
     };
 
     // Make the POST request to the backend server
+    // Place url of cloud funccctions
     fetch('https://us-central1-sdp-19.cloudfunctions.net/add_question', {
       method: 'POST',
       headers: {

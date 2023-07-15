@@ -11,7 +11,8 @@ const DeleteQuestionPage = () => {
     const requestData = {
       questionNumber: question,
     };
-  
+    
+    // Place url of cloud funccctions
     fetch('https://us-central1-sdp-19.cloudfunctions.net/delete_question', {
       method: 'POST',
       headers: {

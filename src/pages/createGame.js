@@ -10,11 +10,11 @@ const CreateGamePage = () => {
   const [category, setCategory] = useState('');
   const [difficulty, setDifficulty] = useState('');
   const [timeFrame, setTimeFrame] = useState(0);
-  const [numbers, setNumbers] = useState([]);
+  const [questionNumbers, setQuestionNumbers] = useState([]);
 
   const handleCreateGame = () => {
     // Validate the form inputs here
-  
+
     // Create the game data object
     const gameData = {
       gameId,
@@ -22,9 +22,9 @@ const CreateGamePage = () => {
       category,
       difficulty,
       timeFrame,
-      numbers,
+      questionNumbers,
     };
-  
+
     // Make the backend request here
     fetch('http://localhost:5000/creategame', {
       method: 'POST',
@@ -48,11 +48,11 @@ const CreateGamePage = () => {
         alert('Failed to create game', error);
       });
   };
-  
+
   const handleAddNumber = () => {
     const number = prompt('Enter a question number');
     if (number !== null && number !== '') {
-      setNumbers((prevNumbers) => [...prevNumbers, parseInt(number)]);
+      setQuestionNumbers((prevQuestionNumbers) => [...prevQuestionNumbers, parseInt(number)]);
     }
   };
 
@@ -113,7 +113,7 @@ const CreateGamePage = () => {
         </div>
         <div className={styles.formRow}>
           <h4>Question Numbers</h4>
-          {numbers.map((number, index) => (
+          {questionNumbers.map((number, index) => (
             <div key={index}>{number}</div>
           ))}
           <Button variant="contained" onClick={handleAddNumber}>

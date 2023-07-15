@@ -50,6 +50,28 @@ def add_question():
 
     return jsonify({'message': 'Question added successfully'})
 
+@app.route('/creategame', methods=['POST'])
+def create_game():
+    # Extract the game data from the request JSON
+    game_data = request.get_json()
+    game_name = game_data['gameName']
+    game_id = game_data['gameId']
+    category = game_data['category']
+    difficulty = game_data['difficulty']
+    time_frame = game_data['timeFrame']
+    question_numbers = game_data['questionNumbers']
+
+    game_ref = db.collection('games').document(game_name)
+    game_ref.set({
+        'gameId': game_id,
+        'gameName': game_name,
+        'category': category,
+        'difficulty': difficulty,
+        'timeFrame': time_frame,
+        'questionNumbers': question_numbers
+    })
+
+    return 'Game created successfully', 200
 
 @app.route('/editquestion', methods=['POST'])
 def edit_question():
