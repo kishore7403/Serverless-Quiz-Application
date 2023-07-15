@@ -16,7 +16,7 @@ const EditQuestionDetailsPage = () => {
 
   const handleSaveChanges = () => {
     // Make the backend request here
-    fetch('http://localhost:5000/addquestion', {
+    fetch('https://us-central1-sdp-19.cloudfunctions.net/add_question', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
