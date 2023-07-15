@@ -15,7 +15,7 @@ const EditQuestionPage = () => {
       questionNumber: questionNumber
     };
 
-    fetch('http://localhost:5000/editquestion', {
+    fetch('https://us-central1-sdp-19.cloudfunctions.net/edit_question', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
