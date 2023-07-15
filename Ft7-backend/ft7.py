@@ -61,7 +61,7 @@ def create_game():
     time_frame = game_data['timeFrame']
     question_numbers = game_data['questionNumbers']
 
-    game_ref = db.collection('games').document(game_name)
+    game_ref = db.collection('games').document('g'+ str(game_id))
     game_ref.set({
         'gameId': game_id,
         'gameName': game_name,
@@ -73,6 +73,26 @@ def create_game():
 
     return 'Game created successfully', 200
 
+
+@app.route('/managegame', methods=['POST'])
+def get_game_details():
+    data = request.get_json()
+    game_id = data.get('gameId')
+
+    if game_id is None:
+        return jsonify({'error': 'Invalid game ID'})
+
+    try:
+        game_ref = db.collection('games').document('g'+str(game_id))
+        game_doc = game_ref.get()
+
+        if game_doc.exists:
+            game_data = game_doc.to_dict()
+            return jsonify(game_data)
+        else:
+            return jsonify({'error': 'Game not found'})
+    except Exception as e:
+        return jsonify({'error': 'Failed to fetch game details', 'message': str(e)})
 @app.route('/editquestion', methods=['POST'])
 def edit_question():
     try:

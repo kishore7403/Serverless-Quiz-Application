@@ -26,7 +26,7 @@ const TriviaContentManagementPage = () => {
   };
 
   const handleManageGames = () => {
-    navigate('/manage-games');
+    navigate('/edit-game');
   };
 
   return (

@@ -11,7 +11,8 @@ import EditQuestionPage from "./pages/editquestion";
 import EditQuestionDetailsPage from "./pages/editQuestionDetails";
 import DeleteQuestionPage from "./pages/deleteQuestion";
 import CreateGamePage from "./pages/createGame";
-
+import ManageGamePage from "./pages/manageGame";
+import ManageGameDetailsPage from "./pages/manageGameDetails";
 
 function App() {
   return <div>
@@ -27,6 +28,8 @@ function App() {
         <Route element={<EditQuestionDetailsPage />} path="/edit-question-details" />
         <Route element={<DeleteQuestionPage />} path="/delete-question" />
         <Route element={<CreateGamePage />} path="/create-game" />
+        <Route element={<ManageGamePage />} path="/edit-game" />
+        <Route element={<ManageGameDetailsPage />} path="/edit-game-details" />
       </Routes>
     </AuthContextProvider>
   </div>;

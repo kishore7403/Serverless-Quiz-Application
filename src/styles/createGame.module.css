@@ -1,30 +1,35 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .formContainer {
-    width: 400px;
-  }
-  
-  .formRow {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-  }
-  
-  .formRow h4 {
-    margin-bottom: 10px;
-  }
-  
-  .formRow:last-child {
-    margin-bottom: 0;
-  }
-  
-  .createButton {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formContainer {
+  width: 400px;
+}
+
+.formRow {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.formRow h4 {
+  margin-bottom: 10px;
+}
+
+.formRow:last-child {
+  margin-bottom: 0;
+}
+
+.createButton {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.removeButton {
+  margin:0px 20px 5px 5px;
+  font-size: 12px;
+  padding: 4px 8px;
+}

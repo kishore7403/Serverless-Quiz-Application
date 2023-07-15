@@ -11,6 +11,7 @@ const CreateGamePage = () => {
   const [difficulty, setDifficulty] = useState('');
   const [timeFrame, setTimeFrame] = useState(0);
   const [questionNumbers, setQuestionNumbers] = useState([]);
+  const [newQuestionNumber, setNewQuestionNumber] = useState('');
 
   const handleCreateGame = () => {
     // Validate the form inputs here
@@ -50,10 +51,16 @@ const CreateGamePage = () => {
   };
 
   const handleAddNumber = () => {
-    const number = prompt('Enter a question number');
-    if (number !== null && number !== '') {
-      setQuestionNumbers((prevQuestionNumbers) => [...prevQuestionNumbers, parseInt(number)]);
+    if (newQuestionNumber.trim() !== '') {
+      setQuestionNumbers((prevQuestionNumbers) => [...prevQuestionNumbers, newQuestionNumber]);
+      setNewQuestionNumber(''); // Clear the new question number field
     }
+  };
+
+  const handleRemoveNumber = (number) => {
+    setQuestionNumbers((prevQuestionNumbers) =>
+      prevQuestionNumbers.filter((num) => num !== number)
+    );
   };
 
   return (
@@ -114,11 +121,26 @@ const CreateGamePage = () => {
         <div className={styles.formRow}>
           <h4>Question Numbers</h4>
           {questionNumbers.map((number, index) => (
-            <div key={index}>{number}</div>
+            <div key={index}>
+              {number}
+              <Button variant="contained" onClick={() => handleRemoveNumber(number)} className={styles.removeButton}>
+  Remove
+</Button>
+
+            </div>
           ))}
-          <Button variant="contained" onClick={handleAddNumber}>
-            Add Question Number
-          </Button>
+          <div className={styles.formRow}>
+            <TextField
+              label="New Question Number"
+              value={newQuestionNumber}
+              onChange={(e) => setNewQuestionNumber(e.target.value)}
+              fullWidth
+              margin="normal"
+            />
+            <Button variant="contained" onClick={handleAddNumber}>
+              Add Question Number
+            </Button>
+          </div>
         </div>
         <Button variant="contained" onClick={handleCreateGame} className={styles.createButton}>
           Create Game
