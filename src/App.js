@@ -7,7 +7,7 @@ import {AuthContextProvider} from "./context/AuthContext";
 import Dashboard from "./pages/dashboard";
 import TriviaContentManagementPage from "./pages/admin";
 import AddQuestionForm from "./pages/addQuestion";
-import EditQuestionPage from "./pages/editQuestion";
+import EditQuestionPage from "./pages/editquestion";
 import EditQuestionDetailsPage from "./pages/editQuestionDetails";
 import DeleteQuestionPage from "./pages/deleteQuestion";
 
