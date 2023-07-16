@@ -118,5 +118,13 @@ def get_game_details():
         return jsonify({'error': 'Failed to fetch game details', 'message': str(e)})
 
 
+@app.route('/allgames', methods=['GET'])
+def get_document_ids():
+    collection_ref = db.collection("games")
+    docs = collection_ref.get()
+    document_ids = [doc.id for doc in docs]
+    return jsonify(document_ids), 200, {'Content-Type': 'application/json'}
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
