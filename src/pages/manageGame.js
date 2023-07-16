@@ -16,7 +16,7 @@ const ManageGamePage = () => {
     };
 
     // Make the backend request here
-    fetch('http://localhost:5000/managegame', {
+    fetch('https://us-central1-sdp-19.cloudfunctions.net/manage_game', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

@@ -27,7 +27,7 @@ const ManageGameDetailsPage = () => {
       questionNumbers: gameData.questionNumbers,
     };
 
-    fetch('http://localhost:5000/creategame', {
+    fetch('https://us-central1-sdp-19.cloudfunctions.net/create_game', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

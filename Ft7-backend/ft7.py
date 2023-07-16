@@ -50,6 +50,29 @@ def add_question():
 
     return jsonify({'message': 'Question added successfully'})
 
+@app.route('/editquestion', methods=['POST'])
+def edit_question():
+    try:
+        question_number = request.json.get('questionNumber')
+        doc_ref = db.collection('questions').document('q'+str(question_number))
+        doc = doc_ref.get()
+        if doc.exists:
+            question_data = doc.to_dict()
+            return jsonify(question_data), 200
+        else:
+            return jsonify({'message': 'Question not found'}), 404
+    except Exception as e:
+        return jsonify({'message': str(e)}), 500
+
+@app.route('/deletequestion', methods=['POST'])
+def delete_document():
+    try:
+        document_id = request.json['questionNumber']
+        db.collection('questions').document('q'+str(document_id)).delete()
+        return jsonify({'success': True}), 200
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
 @app.route('/creategame', methods=['POST'])
 def create_game():
     # Extract the game data from the request JSON
@@ -93,28 +116,7 @@ def get_game_details():
             return jsonify({'error': 'Game not found'})
     except Exception as e:
         return jsonify({'error': 'Failed to fetch game details', 'message': str(e)})
-@app.route('/editquestion', methods=['POST'])
-def edit_question():
-    try:
-        question_number = request.json.get('questionNumber')
-        doc_ref = db.collection('questions').document('q'+str(question_number))
-        doc = doc_ref.get()
-        if doc.exists:
-            question_data = doc.to_dict()
-            return jsonify(question_data), 200
-        else:
-            return jsonify({'message': 'Question not found'}), 404
-    except Exception as e:
-        return jsonify({'message': str(e)}), 500
 
-@app.route('/deletequestion', methods=['POST'])
-def delete_document():
-    try:
-        document_id = request.json['questionNumber']
-        db.collection('questions').document('q'+str(document_id)).delete()
-        return jsonify({'success': True}), 200
-    except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
