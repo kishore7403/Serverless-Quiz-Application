@@ -1,10 +1,51 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
-import { firestore } from "../firebase";
-import { collection, getDocs, doc, setDoc } from "firebase/firestore";
+import {
+  Container,
+  Typography,
+  Button,
+  Grid,
+  Card,
+  CardContent,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(4),
+  },
+  card: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    borderRadius: theme.spacing(1),
+    boxShadow: "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)",
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+    transition: "background-color 0.2s",
+    "&:hover": {
+      backgroundColor: theme.palette.secondary.main,
+    },
+  },
+  button: {
+    marginRight: theme.spacing(2),
+  },
+  formControl: {
+    marginBottom: theme.spacing(2),
+    minWidth: 150,
+  },
+}));
 
 const Game = () => {
+  const classes = useStyles();
   const { logOut, user } = UserAuth();
   const navigate = useNavigate();
   const [gameLobbies, setGameLobbies] = useState([]);
@@ -12,6 +53,7 @@ const Game = () => {
   const [categoryFilter, setCategoryFilter] = useState("");
   const [difficultyFilter, setDifficultyFilter] = useState("");
   const [timeFrameFilter, setTimeFrameFilter] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const handleLogOut = async () => {
     try {
@@ -23,64 +65,40 @@ const Game = () => {
   };
 
   useEffect(() => {
-    // Fetch all game lobbies from Firestore
     const fetchGameLobbies = async () => {
       try {
-        const gameLobbiesRef = collection(firestore, "gameLobbies");
-        const snapshot = await getDocs(gameLobbiesRef);
-        const lobbiesData = snapshot.docs.map((doc) => doc.data());
-        setGameLobbies(lobbiesData);
+        const response = await fetch(
+          "https://us-central1-csci5410-b00934899.cloudfunctions.net/function-1_test"
+        );
+        const data = await response.json();
+        setGameLobbies(data.gameLobbies);
+        setLoading(false);
       } catch (err) {
         console.log(err);
+        setLoading(false);
       }
     };
 
     fetchGameLobbies();
   }, []);
 
-  const createGameLobby = async () => {
-    try {
-      const gameLobbiesRef = collection(firestore, "gameLobbies");
-      const gameLobbyId = doc(gameLobbiesRef);
-      const players = [
-        { id: "player1-id", name: "Player 1" },
-        { id: "player2-id", name: "Player 2" },
-        // Add more player objects as needed
-      ];
+  useEffect(() => {
+    const applyFilters = () => {
+      const filteredLobbies = gameLobbies.filter((lobby) => {
+        const categoryMatch = !categoryFilter || lobby.category === categoryFilter;
+        const difficultyMatch = !difficultyFilter || lobby.difficulty === difficultyFilter;
+        const timeFrameMatch = !timeFrameFilter || lobby.timeFrame === timeFrameFilter;
+        return categoryMatch && difficultyMatch && timeFrameMatch;
+      });
 
-      const newGameLobby = {
-        id: gameLobbyId.id,
-        name: "My Game Lobby",
-        category: "Trivia",
-        difficulty: "Easy",
-        timeFrame: "30 minutes",
-        players: players,
-        // Add other required fields for the game lobby
-      };
+      setFilteredLobbies(filteredLobbies);
+    };
 
-      await setDoc(gameLobbyId, newGameLobby);
-
-      setGameLobbies((prevGameLobbies) => [...prevGameLobbies, newGameLobby]);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    applyFilters();
+  }, [gameLobbies, categoryFilter, difficultyFilter, timeFrameFilter]);
 
   const handleJoinGame = (gameId) => {
     navigate(`/game/${gameId}`);
-  };
-
-  const handleFilterGames = () => {
-    // Filter the game lobbies based on the selected criteria
-    const filteredLobbies = gameLobbies.filter((lobby) => {
-      return (
-        (categoryFilter === "" || lobby.category === categoryFilter) &&
-        (difficultyFilter === "" || lobby.difficulty === difficultyFilter) &&
-        (timeFrameFilter === "" || lobby.timeFrame === timeFrameFilter)
-      );
-    });
-
-    setFilteredLobbies(filteredLobbies);
   };
 
   const resetFilter = () => {
@@ -90,75 +108,108 @@ const Game = () => {
     setFilteredLobbies([]);
   };
 
+  const uniqueCategories = Array.from(new Set(gameLobbies.map((lobby) => lobby.category)));
+  const uniqueDifficulties = Array.from(new Set(gameLobbies.map((lobby) => lobby.difficulty)));
+  const uniqueTimeFrames = Array.from(new Set(gameLobbies.map((lobby) => lobby.timeFrame)));
+
   return (
-    <div>
-      <h1>Game Lobby</h1>
-      {/* Display game lobbies */}
-      <h2>Available Game Lobbies</h2>
-      <ul>
-        {(filteredLobbies.length > 0 ? filteredLobbies : gameLobbies).map((lobby) => (
-          <li key={lobby.id}>
-            <h3>{lobby.name}</h3>
-            <p>Category: {lobby.category}</p>
-            <p>Difficulty: {lobby.difficulty}</p>
-            <p>Time Frame: {lobby.timeFrame}</p>
-            {/* Add other lobby details */}
-            <button onClick={() => handleJoinGame(lobby.id)}>Join Lobby</button>
-          </li>
+    <Container className={classes.root}>
+      <Typography variant="h4" gutterBottom>
+        Game Lobby
+      </Typography>
+      <Typography variant="h6" gutterBottom>
+        Available Game Lobbies
+      </Typography>
+      <Grid container spacing={2}>
+        {(loading ? gameLobbies : filteredLobbies).map((lobby) => (
+          <Grid item xs={12} sm={6} md={4} key={lobby.id}>
+            <Card className={classes.card}>
+              <CardContent>
+                <Typography variant="h5" align="center">
+                  {lobby.name}
+                </Typography>
+                <Typography align="center">Category: {lobby.category}</Typography>
+                <Typography align="center">Difficulty: {lobby.difficulty}</Typography>
+                <Typography align="center">Time Frame: {lobby.timeFrame}</Typography>
+                <Typography align="center">Teams:</Typography>
+                <ul>
+                  {lobby.players.map((team) => (
+                    team.name ? <li key={team.id}>{team.name}</li> : null
+                  ))}
+                </ul>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  className={classes.button}
+                  onClick={() => handleJoinGame(lobby.id)}
+                >
+                  Join Lobby
+                </Button>
+              </CardContent>
+            </Card>
+          </Grid>
         ))}
-      </ul>
-
-      {/* Filter game lobbies */}
-      <h2>Filter Game Lobbies</h2>
-      {/* Category filter */}
-      <div>
-        <label>Category:</label>
-        <select
-          value={categoryFilter}
-          onChange={(e) => setCategoryFilter(e.target.value)}
-        >
-          <option value="">All</option>
-          <option value="Trivia">Trivia</option>
-          <option value="Puzzle">Puzzle</option>
-          {/* Add more category options as needed */}
-        </select>
-      </div>
-      {/* Difficulty filter */}
-      <div>
-        <label>Difficulty:</label>
-        <select
-          value={difficultyFilter}
-          onChange={(e) => setDifficultyFilter(e.target.value)}
-        >
-          <option value="">All</option>
-          <option value="Easy">Easy</option>
-          <option value="Medium">Medium</option>
-          <option value="Hard">Hard</option>
-          {/* Add more difficulty options as needed */}
-        </select>
-      </div>
-      {/* Time Frame filter */}
-      <div>
-        <label>Time Frame:</label>
-        <select
-          value={timeFrameFilter}
-          onChange={(e) => setTimeFrameFilter(e.target.value)}
-        >
-          <option value="">All</option>
-          <option value="15 minutes">15 minutes</option>
-          <option value="30 minutes">30 minutes</option>
-          <option value="1 hour">1 hour</option>
-          {/* Add more time frame options as needed */}
-        </select>
-      </div>
-      <button onClick={handleFilterGames}>Filter Lobbies</button>
-      <button onClick={resetFilter}>Reset Filter</button>
-
-      {/* Create game lobby button */}
-      <button onClick={createGameLobby}>Create Game Lobby</button>
-
-      <button onClick={handleLogOut}>Logout</button>
-    </div>
+      </Grid>
+      <Typography variant="h6" gutterBottom>
+        Filter Game Lobbies
+      </Typography>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={4}>
+          <FormControl className={classes.formControl}>
+            <InputLabel>Category</InputLabel>
+            <Select
+              value={categoryFilter}
+              onChange={(e) => setCategoryFilter(e.target.value)}
+            >
+              <MenuItem value="">All</MenuItem>
+              {uniqueCategories.map((category) => (
+                <MenuItem key={category} value={category}>
+                  {category}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <FormControl className={classes.formControl}>
+            <InputLabel>Difficulty</InputLabel>
+            <Select
+              value={difficultyFilter}
+              onChange={(e) => setDifficultyFilter(e.target.value)}
+            >
+              <MenuItem value="">All</MenuItem>
+              {uniqueDifficulties.map((difficulty) => (
+                <MenuItem key={difficulty} value={difficulty}>
+                  {difficulty}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <FormControl className={classes.formControl}>
+            <InputLabel>Time Frame</InputLabel>
+            <Select
+              value={timeFrameFilter}
+              onChange={(e) => setTimeFrameFilter(e.target.value)}
+            >
+              <MenuItem value="">All</MenuItem>
+              {uniqueTimeFrames.map((timeFrame) => (
+                <MenuItem key={timeFrame} value={timeFrame}>
+                  {timeFrame}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid>
+      </Grid>
+      <Button variant="contained" color="default" onClick={resetFilter}>
+        Reset Filter
+      </Button>
+      <Button variant="contained" color="default" onClick={handleLogOut}>
+        Logout
+      </Button>
+    </Container>
   );
 };
 
