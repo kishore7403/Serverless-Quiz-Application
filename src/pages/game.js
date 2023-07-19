@@ -112,23 +112,11 @@ const GameLobby = () => {
         // Add more player objects as needed
       ];
 
-      const newGameLobby = {
-        id: gameLobbyId.id,
-        name: "My Game Lobby",
-        category: "Trivia",
-        difficulty: "Easy",
-        timeFrame: "30 minutes",
-        players: players,
-        // Add other required fields for the game lobby
-      };
+      setFilteredLobbies(filteredLobbies);
+    };
 
-      await setDoc(gameLobbyId, newGameLobby);
-
-      setGameLobbies((prevGameLobbies) => [...prevGameLobbies, newGameLobby]);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    applyFilters();
+  }, [gameLobbies, categoryFilter, difficultyFilter, timeFrameFilter]);
 
   const handleJoinGame = (gameId) => {
     navigate(`/game/${gameId}`);
