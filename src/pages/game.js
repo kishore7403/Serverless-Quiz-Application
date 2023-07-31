@@ -27,7 +27,8 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     marginBottom: theme.spacing(2),
     borderRadius: theme.spacing(1),
-    boxShadow: "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)",
+    boxShadow:
+      "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)",
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.primary.contrastText,
     transition: "background-color 0.2s",
@@ -44,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Game = () => {
+const GameLobby = () => {
   const classes = useStyles();
   const { logOut, user } = UserAuth();
   const navigate = useNavigate();
@@ -85,9 +86,12 @@ const Game = () => {
   useEffect(() => {
     const applyFilters = () => {
       const filteredLobbies = gameLobbies.filter((lobby) => {
-        const categoryMatch = !categoryFilter || lobby.category === categoryFilter;
-        const difficultyMatch = !difficultyFilter || lobby.difficulty === difficultyFilter;
-        const timeFrameMatch = !timeFrameFilter || lobby.timeFrame === timeFrameFilter;
+        const categoryMatch =
+          !categoryFilter || lobby.category === categoryFilter;
+        const difficultyMatch =
+          !difficultyFilter || lobby.difficulty === difficultyFilter;
+        const timeFrameMatch =
+          !timeFrameFilter || lobby.timeFrame === timeFrameFilter;
         return categoryMatch && difficultyMatch && timeFrameMatch;
       });
 
@@ -108,9 +112,15 @@ const Game = () => {
     setFilteredLobbies([]);
   };
 
-  const uniqueCategories = Array.from(new Set(gameLobbies.map((lobby) => lobby.category)));
-  const uniqueDifficulties = Array.from(new Set(gameLobbies.map((lobby) => lobby.difficulty)));
-  const uniqueTimeFrames = Array.from(new Set(gameLobbies.map((lobby) => lobby.timeFrame)));
+  const uniqueCategories = Array.from(
+    new Set(gameLobbies.map((lobby) => lobby.category))
+  );
+  const uniqueDifficulties = Array.from(
+    new Set(gameLobbies.map((lobby) => lobby.difficulty))
+  );
+  const uniqueTimeFrames = Array.from(
+    new Set(gameLobbies.map((lobby) => lobby.timeFrame))
+  );
 
   return (
     <Container className={classes.root}>
@@ -128,14 +138,20 @@ const Game = () => {
                 <Typography variant="h5" align="center">
                   {lobby.name}
                 </Typography>
-                <Typography align="center">Category: {lobby.category}</Typography>
-                <Typography align="center">Difficulty: {lobby.difficulty}</Typography>
-                <Typography align="center">Time Frame: {lobby.timeFrame}</Typography>
+                <Typography align="center">
+                  Category: {lobby.category}
+                </Typography>
+                <Typography align="center">
+                  Difficulty: {lobby.difficulty}
+                </Typography>
+                <Typography align="center">
+                  Time Frame: {lobby.timeFrame}
+                </Typography>
                 <Typography align="center">Teams:</Typography>
                 <ul>
-                  {lobby.players.map((team) => (
+                  {lobby.players.map((team) =>
                     team.name ? <li key={team.id}>{team.name}</li> : null
-                  ))}
+                  )}
                 </ul>
                 <Button
                   variant="contained"
@@ -213,4 +229,4 @@ const Game = () => {
   );
 };
 
-export default Game;
+export default GameLobby;
