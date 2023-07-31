@@ -20,11 +20,10 @@ function App() {
     <div>
       <AuthContextProvider>
         <Routes>
-          <Route element={<Home />} path="/" />
           <Route element={<Login />} path="/login" />
           <Route element={<Logout />} path="/logout" />
           <Route element={<Dashboard />} path="/dashboard" />
-          <Route element={<GameLobby />} path="/game-lobby" />
+          <Route path="/game-lobby" element={<GameLobby />} />
           <Route element={<TriviaContentManagementPage />} path="/admin" />
           <Route element={<AddQuestionForm />} path="/add-question" />
           <Route element={<EditQuestionPage />} path="/edit-question" />
@@ -39,6 +38,7 @@ function App() {
             element={<ManageGameDetailsPage />}
             path="/edit-game-details"
           />
+          <Route element={<Home />} path="/" />
         </Routes>
       </AuthContextProvider>
     </div>
