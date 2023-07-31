@@ -14,6 +14,8 @@ import {
   InputLabel,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { firestore } from "../firebase";
+import { collection, getDocs, doc, setDoc } from "firebase/firestore";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -100,6 +102,33 @@ const GameLobby = () => {
 
     applyFilters();
   }, [gameLobbies, categoryFilter, difficultyFilter, timeFrameFilter]);
+  const createGameLobby = async () => {
+    try {
+      const gameLobbiesRef = collection(firestore, "gameLobbies");
+      const gameLobbyId = doc(gameLobbiesRef);
+      const players = [
+        { id: "player1-id", name: "Player 1" },
+        { id: "player2-id", name: "Player 2" },
+        // Add more player objects as needed
+      ];
+
+      const newGameLobby = {
+        id: gameLobbyId.id,
+        name: "My Game Lobby",
+        category: "Trivia",
+        difficulty: "Easy",
+        timeFrame: "30 minutes",
+        players: players,
+        // Add other required fields for the game lobby
+      };
+
+      await setDoc(gameLobbyId, newGameLobby);
+
+      setGameLobbies((prevGameLobbies) => [...prevGameLobbies, newGameLobby]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleJoinGame = (gameId) => {
     navigate(`/game/${gameId}`);
