@@ -5,9 +5,6 @@ import Typography from "@mui/material/Typography";
 import Box from "@material-ui/core/Box";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import LeaderboardPage from "./pages/Leaderboard";
-import Table from "./pages/Table";
-import axios from "axios";
-import Chart from "./pages/Chart";
 
 function UserProfile() {
   const location = useLocation();
@@ -16,36 +13,7 @@ function UserProfile() {
   const [email, setEmail] = React.useState("");
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
-  const [leaderboardData, setLeaderboardData] = useState([]);
-  const [userIds, setUserIds] = useState(["TeamA"]);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    fetchLeaderboardData();
-  }, []);
-
-  const fetchLeaderboardData = async () => {
-    const resp = await axios.post(
-      "https://oqgwtsxibuxjiprfkahpn7dhpa0mzvig.lambda-url.us-east-1.on.aws/",
-      {
-        entity_type: "player",
-      }
-    );
-    const fetchedData = resp.data;
-    const filteredData = fetchedData.filter((item) => userIds.includes(item.id));
-    setLeaderboardData(filteredData);
-  };
-
-  const columns = React.useMemo(
-    () => [
-      { Header: "Name", accessor: "name" },
-      { Header: "Right Answer", accessor: "total_right_answers" },
-      { Header: "Wrong Answer", accessor: "total_wrong_answers" },
-      { Header: "Score", accessor: "total_score" },
-      
-    ],
-    []
-  );
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent the form from triggering a page reload
@@ -145,7 +113,7 @@ function UserProfile() {
               User Profile Management
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={5.5}></Grid>
+          <Grid item xs={12} sm={2}></Grid>
           <Grid item xs={12} sm={6}>
             {imageUrl && (
               <>
@@ -209,13 +177,7 @@ function UserProfile() {
           </Grid>
         </Grid>
       </form>
-      <Table columns={columns} data={leaderboardData} />
-      <Box style={{marginTop: "42px", textAlign: "center"}}>
-        <Typography variant="h5" align="center" gutterBottom>
-          Statistics
-        </Typography>
-        <Chart data={leaderboardData} entityType="player" />
-      </Box>
+      <LeaderboardPage/>
     </div>
   );
 }

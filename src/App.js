@@ -24,6 +24,7 @@ import UserProfile from "./profile";
 
 import ChatPage from "./pages/chatPage";
 import TeamDetails from "./pages/TeamDetails";
+import CreateGameLobbies from "./pages/createGameLobbies";
 
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
 
           <Route element={<QuizGame />} path="/game-experience" />
           <Route element={<ChatPage />} path="/chatpage" />
+          <Route element={<CreateGameLobbies />} path="/create-game-lobbies" />
 
 
         </Routes>

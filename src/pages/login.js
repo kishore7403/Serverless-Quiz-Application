@@ -33,7 +33,7 @@ const Login = () => {
     } catch (e) {
       setError(e.message)
       console.log(e.message)
-      notify();
+      toast(e.message);
     }
   };
   const handleGoogleSignIn = async () => {

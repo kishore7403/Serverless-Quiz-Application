@@ -1,5 +1,6 @@
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import MuiAppBar from "@mui/material/AppBar";
 import Badge from "@mui/material/Badge";
 import Box from "@mui/material/Box";
@@ -23,6 +24,10 @@ const Dashboard = () => {
 
   const getNotifications = () => {
     navigate("/notification");
+  };
+
+  const getLeaderboard = () => {
+    navigate("/leaderboard");
   };
 
   const handleLogOut = async () => {
@@ -134,6 +139,9 @@ const Dashboard = () => {
                 Dashboard
               </Typography>
               <IconButton color="inherit">
+                <Badge sx={{ mr: 2 }} color="secondary">
+                  <LeaderboardIcon onClick={getLeaderboard} />
+                </Badge>
                 <Badge color="secondary">
                   {/*User Profile Menu*/}
                   <AccountCircleIcon
@@ -141,8 +149,7 @@ const Dashboard = () => {
                     sx={{ mr: 2 }}
                   />
                 </Badge>
-                <Badge badgeContent={4} color="secondary">
-                  {/*Notification Menu*/}
+                <Badge badgeContent={2} color="secondary">
                   <NotificationsIcon onClick={getNotifications} />
                 </Badge>
               </IconButton>
