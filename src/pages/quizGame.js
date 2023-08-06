@@ -151,8 +151,8 @@ const QuizGame = () => {
   useEffect(() => {
     const questionInterval = setInterval(() => {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-      setCountdown(70); // 3 seconds
-    }, 7000); // 3 seconds
+      setCountdown(5); // 3 seconds
+    }, 5000); // 3 seconds
 
     setTimer(questionInterval);
 
@@ -171,7 +171,7 @@ const QuizGame = () => {
 
     // Reset the countdown for the current question
     if (currentQuestionIndex >= 0 && currentQuestionIndex < questionNumbers.length) {
-      setCountdown(70); // 3 seconds
+      setCountdown(5); // 3 seconds
     }
   }, [timer, countdown, currentQuestionIndex, questionNumbers.length]);
 
