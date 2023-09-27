@@ -66,14 +66,8 @@ Welcome to Trivia Titans, the ultimate online trivia game where users can form t
 
 ## Project Contributors
 
-- John (Google Account)
-- Sarah (Facebook Account)
-- Three friends (Email Addresses)
-
-## Project Status
-
-Version 1.0
-
-This project is a collaborative effort by the developers at Dalhousie University, aiming to create a feature-rich online trivia game using cutting-edge technologies and a multi-cloud serverless architecture. The team is excited to continue improving the game and providing an engaging experience for trivia enthusiasts like John, Sarah, and their friends. Stay tuned for updates and enhancements to Trivia Titans!
-
-
+- Limysh Kalapa
+- Deep Dave 
+- Kishoreganesh Sundararajan
+- Himanshu
+- William Brace
